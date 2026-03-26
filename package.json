@@ -1,0 +1,22 @@
+{
+  "name": "spec-driven-development",
+  "version": "1.0.0",
+  "description": "Ideas about Spec-Driven Development",
+  "main": "index.js",
+  "scripts": {
+    "present:preview": "npx @marp-team/marp-cli presentations/ --preview --watch",
+    "present:pdf": "npx @marp-team/marp-cli presentations/ --pdf",
+    "present:html": "npx @marp-team/marp-cli presentations/ --html",
+    "present:serve": "npx @marp-team/marp-cli presentations/ --server"
+  },
+  "keywords": [
+    "spec-driven-development",
+    "presentations",
+    "marp"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@marp-team/marp-cli": "^3.0.0"
+  }
+}

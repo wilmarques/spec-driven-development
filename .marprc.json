@@ -1,0 +1,21 @@
+{
+  "engine": {
+    "unofficial": true
+  },
+  "theme": "default",
+  "title": "Spec-Driven Development Presentations",
+  "description": "Presentations for Spec-Driven Development concepts",
+  "author": "",
+  "keywords": ["spec-driven-development", "presentations"],
+  "markdown": {
+    "breaks": true,
+    "linkify": true,
+    "typographer": true
+  },
+  "script": [
+    "https://cdn.jsdelivr.net/npm/reveal.js@4.3.1/plugin/markdown/markdown.min.js"
+  ],
+  "style": [
+    "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"
+  ]
+}
