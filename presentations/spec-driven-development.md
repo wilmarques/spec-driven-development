@@ -62,18 +62,18 @@ Create a user profile component
 ## Prompt:
 
 ```markdown
+Create a user profile component with:
+
+- Display mode: Show user info (name, email, avatar URL)
+- Edit mode: Form with validation (email required, name min 2 chars)
+- Actions: Save, Cancel, Edit buttons
+- States: Loading, Error, Success
+
 ## Context
 - Angular 17 with standalone components
 - Using Angular Material for UI
 - NgRx for state management
 - Project follows clean architecture
-
-## Task
-Create a user profile component with:
-- Display mode: Show user info (name, email, avatar URL)
-- Edit mode: Form with validation (email required, name min 2 chars)
-- Actions: Save, Cancel, Edit buttons
-- States: Loading, Error, Success
 
 ## Requirements
 - Use reactive forms
