@@ -11,6 +11,19 @@ description: "From Simple Prompts to Spec-Driven Development"
 
 ---
 
+# The Problem with AI-Assisted Development
+
+## Without structure, AI gives you:
+
+- ❌ **Inconsistent results** — different output every run
+- ❌ **Lost context** — starts fresh every session
+- ❌ **No shared understanding** — each developer prompts differently
+- ❌ **Hard to review** — no specification to validate against
+
+## SDD makes specifications the source of truth.
+
+---
+
 # Today's Journey
 
 1. **Simple Prompt**
@@ -31,6 +44,8 @@ description: "From Simple Prompts to Spec-Driven Development"
 - Save/cancel functionality
 - Loading states
 - Error handling
+
+> We'll implement this same task using each approach — so you can compare directly.
 
 ---
 
@@ -70,9 +85,9 @@ Create a user profile component with:
 - States: Loading, Error, Success
 
 ## Context
-- Angular 17 with standalone components
-- Using Angular Material for UI
-- NgRx for state management
+- Angular 21 with standalone components
+- HttpClient for API calls
+- Reactive forms for form handling
 - Project follows clean architecture
 
 ## Requirements
@@ -129,14 +144,19 @@ export interface User {
   updatedAt: Date;
 }
 
-// user.service.ts pattern
+// user.service.ts
 @Injectable({ providedIn: 'root' })
 export class UserService {
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(`/api/users/${id}`);
+  }
   updateUser(id: string, data: Partial<User>): Observable<User> {
     return this.http.patch<User>(`/api/users/${id}`, data);
   }
 }
 ```
+
+> 💻 **Demo**
 
 ## Benefits over Prompt Engineering:
 
@@ -161,40 +181,38 @@ export class UserService {
 ## Prompt:
 
 ```markdown
-## Project Structure & Context
-[Same as Context Engineering - include all project info]
+Plan and implement a UserProfileComponent. Consider:
 
-## Planning Steps
+- Component architecture (display vs edit mode)
+- Data flow from UserService to component
+- State management (loading, editing, error states)
+- Form validation (name min 2 chars, email required)
+- Testing strategy
 
-### Step 1: Component Architecture
-UserProfileComponent
-├── UserProfileDisplayComponent (view mode)
-├── UserProfileEditComponent (edit mode)
-└── UserProfileActionsComponent (buttons)
+Angular 21 standalone app. Existing code:
 
-### Step 2: Data Flow
-UserService -> UserProfileStore -> Component
-                    ↓
-              Form Validation
-                    ↓
-              API Update -> Store Update
-
-### Step 3: State Management
-interface UserProfileState {
-  user: User | null;
-  isLoading: boolean;
-  error: string | null;
-  isEditing: boolean;
+// user.model.ts
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatarUrl?: string;
+  updatedAt: Date;
 }
 
-### Step 4: Testing Strategy
-- Unit tests for each component
-- Integration tests for user flow
-- E2E tests for complete scenarios
-
-## Task
-Implement user profile component following this architecture plan.
+// user.service.ts
+@Injectable({ providedIn: 'root' })
+export class UserService {
+  getUser(id: string): Observable<User> {
+    return this.http.get<User>(`/api/users/${id}`);
+  }
+  updateUser(id: string, data: Partial<User>): Observable<User> {
+    return this.http.patch<User>(`/api/users/${id}`, data);
+  }
+}
 ```
+
+> 💻 **Demo**
 
 ## Benefits over Context Engineering:
 
@@ -213,29 +231,9 @@ Implement user profile component following this architecture plan.
 
 ---
 
-# Plan Mode vs SDD
-
-## Plan Mode Limitations:
-
-- ❌ Session-based planning
-- ❌ Hard to share and refine
-- ❌ No persistent workspace
-- ❌ Lost after conversation ends
-- ❌ Difficult to track changes over time
-
-## SDD Advantages:
-
-- ✅ Persistent specifications through entire development lifecycle
-- ✅ Shareable workspace for team collaboration
-- ✅ Version-controlled specs that evolve with the feature
-- ✅ Continuous improvement as requirements change
-- ✅ Cross-session continuity - pick up where you left off
-
----
-
 # 5. Spec-Driven Development
 
-## Prompt:
+## Specification (`user-profile.spec.md`):
 
 ```markdown
 # User Profile Component Specification
@@ -288,6 +286,8 @@ interface UserProfileComponent {
 Implement this specification exactly as written.
 ```
 
+> 💻 **Demo**
+
 ## Benefits over Plan Mode:
 
 - ✅ Clear, testable specifications
@@ -306,31 +306,7 @@ Implement this specification exactly as written.
 
 # 6. Tools for SDD
 
-## spec-kit
-
-```bash
-npm install -g spec-kit
-spec-kit init
-spec-kit generate component user-profile
-```
-
-## Benefits over Manual SDD:
-
-- ✅ Template-based spec generation
-- ✅ Integration with testing frameworks
-- ✅ Documentation automation
-
-## Negatives vs openspec:
-
-- ❌ Proprietary format
-- ❌ Limited language support
-- ❌ No standardization
-
----
-
-# openspec
-
-## Configuration:
+## OpenSpec *(live demo)*
 
 ```yaml
 # openspec.yaml
@@ -343,52 +319,14 @@ components:
       - "user-profile.test.ts"
 ```
 
-## Benefits over spec-kit:
-
 - ✅ Standardized specification format
 - ✅ Multi-language support
 - ✅ CI/CD integration
 
-## Negatives vs AI-DLC:
+## Also worth knowing:
 
-- ❌ Manual specification writing
-- ❌ No AI generation
-- ❌ Limited automation
-
----
-
-# AWS AI-DLC
-
-## Usage:
-
-```python
-from aws_ai_dlc import SpecGenerator
-
-generator = SpecGenerator(model="claude-3")
-spec = generator.generate_from_requirements(
-    requirements="user-profile-requirements.md",
-    framework="angular",
-    output_format="openspec"
-)
-```
-
-## Benefits over openspec:
-
-- ✅ AI-powered specification generation
-- ✅ Natural language to specs
-- ✅ Automated test case generation
-
-## Complete Workflow:
-
-```mermaid
-graph LR
-    A[Requirements] --> B[OpenSpec]
-    B --> C[spec-kit]
-    C --> D[Generated Code]
-    D --> E[AWS AI-DLC]
-    E --> F[Test Generation]
-    F --> G[CI/CD Pipeline]
-```
+- **spec-kit** — Template-based spec generation (`npm install -g spec-kit`)
+- **AWS AI-DLC** — AI-powered spec generation from natural language requirements
 
 ---
 
@@ -410,22 +348,18 @@ graph LR
 @Component({
   selector: 'app-user-profile',
   template: `
-    <ng-container *ngIf="!isEditing; else editMode">
+    @if (!isEditing) {
       <app-user-profile-display
         [user]="user"
         [isLoading]="isLoading"
         [error]="error"
-        (edit)="editUser()">
-      </app-user-profile-display>
-    </ng-container>
-    
-    <ng-template #editMode>
+        (edit)="editUser()" />
+    } @else {
       <app-user-profile-edit
         [user]="user"
         (save)="saveUser($event)"
-        (cancel)="cancelEdit()">
-      </app-user-profile-edit>
-    </ng-template>
+        (cancel)="cancelEdit()" />
+    }
   `
 })
 export class UserProfileComponent implements OnInit {
@@ -452,6 +386,14 @@ export class UserProfileComponent implements OnInit {
 ✅ **Faster development** with automation
 ✅ **Living documentation** that stays current
 ✅ **Easier maintenance** with clear specifications
+
+---
+
+# Resources
+
+- **OpenSpec** — Standardized specification format with CI/CD integration
+- **spec-kit** — Template-based spec generation
+- **AWS AI-DLC** — AI-powered spec generation from natural language requirements
 
 ---
 
