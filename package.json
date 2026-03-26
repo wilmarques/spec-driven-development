@@ -17,6 +17,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@angular/cli": "^21.2.4",
     "@marp-team/marp-cli": "^3.0.0"
   }
 }
