@@ -323,6 +323,36 @@ components:
 - ✅ Multi-language support
 - ✅ CI/CD integration
 
+**Slash commands:**
+
+```
+/opsx-propose   → create proposal + specs + design + tasks
+/opsx-explore   → think through ideas before committing
+/opsx-apply     → implement tasks from the current change
+/opsx-archive   → archive completed change, update specs
+```
+
+**Achieving the UserProfile requirements with OpenSpec:**
+
+```
+1. /opsx-propose "add UserProfileComponent with display/edit modes,
+   validation and state management"
+
+   → AI generates: proposal.md, specs/, design.md, tasks.md
+
+2. /opsx-apply
+
+   → AI implements tasks from the generated specs
+
+3. /opsx-archive
+
+   → Change archived, specs kept as living documentation
+```
+
+- ✅ No manual spec writing
+- ✅ AI-generated templates from a single prompt
+- ✅ Structured, auditable artifacts per change
+
 ## Also worth knowing:
 
 - **spec-kit** — Template-based spec generation (`npm install -g spec-kit`)
